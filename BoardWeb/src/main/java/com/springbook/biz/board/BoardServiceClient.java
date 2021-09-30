@@ -1,7 +1,7 @@
 package com.springbook.biz.board;
 
 import java.util.List;
-import java.util.Scanner;
+//import java.util.Scanner;
 
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
@@ -10,28 +10,25 @@ public class BoardServiceClient {
 
 	public static void main(String[] args) {
 		
-		// 1. ½ºÇÁ¸µ ÄÁÅ×ÀÌ³Ê ±¸µ¿
 		
 		AbstractApplicationContext container = new GenericXmlApplicationContext("applicationContext.xml");
 		
-		// 2. ½ºÇÁ¸µ ÄÁÅ×ÀÌ³Ê¿¡¼­ BoardServiceImpl °´Ã¼¸¦ LookUp
 		
 		BoardService boardService = container.getBean("boardService",BoardService.class);
 		
-		// 3. ±Û µî·Ï °¡´É Å×½ºÆ®
 		
 		BoardVO vo = new BoardVO();
-		vo.setTitle("ÀÓ½Ã Á¦¸ñ");
-		vo.setWriter("È«±æµ¿");
-		vo.setContent("ÀÓ½Ã ³»¿ë............");
-		boardService.insertBoard(vo);
+		vo.setSeq(100);							// BoardDAOSpring.javaì—ì„œ ì¿¼ë¦¬ë¬¸ì„ ìˆ˜ë™ì…ë ¥ í•˜ë„ë¡ ìˆ˜ì •í–ˆê¸° ë•Œë¬¸ì— ì‹œí€€ìŠ¤ë¥¼ ìƒˆë¡œ ì…ë ¥í•´ì¤Œ
+		vo.setTitle("ì•ˆë…•í•˜ì„¸ìš”");
+		vo.setWriter("ì¿ ë ");
+		vo.setContent("ë°˜ê°‘ìŠµë‹ˆë‹¤...");
+//		boardService.insertBoard(vo);			// ì´ì œëŠ” AOPë¡œ íŠ¸ëœì­ì…˜ ì²˜ë¦¬í•˜ê¸° ë•Œë¬¸ì— ì£¼ì„ì²˜ë¦¬í•¨
 		
-		// 3.1 ±Û »èÁ¦ Å×½ºÆ®
 //		Scanner sc = new Scanner(System.in);
 //			System.out.println("=========== deleteBoard =============");
-//			System.out.print("startPoint¸¦ ÀÔ·ÂÇÏ½Ã¿À : ");
+//			System.out.print("startPoint ë¥¼ ì…ë ¥í•˜ì‹œì˜¤ : ");
 //			int start = sc.nextInt();
-//			System.out.print("endPoint¸¦ ÀÔ·ÂÇÏ½Ã¿À : ");
+//			System.out.print("endPoint ë¥¼ ì…ë ¥í•˜ì‹œì˜¤: ");
 //			int end = sc.nextInt();
 //		for(int i = start ; i <= end ; i++) {
 //			vo.setSeq(i);
@@ -39,7 +36,6 @@ public class BoardServiceClient {
 //		}
 //		sc.close();
 		
-		// 4. ±Û ¸ñ·Ï °Ë»ö Å×½ºÆ®
 		
 		List<BoardVO> boardList = boardService.getBoardList(vo);
 		for(BoardVO board : boardList) {

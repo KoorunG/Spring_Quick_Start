@@ -1,7 +1,35 @@
 package com.springbook.biz.common;
 
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.stereotype.Service;
+
+@Service
+@Aspect			// Aspect = Pointcut + Advice
 public class LogAdvice {
-	public void printLog() {
-		System.out.println("[°øÅë ·Î±×] ºñÁî´Ï½º ·ÎÁ÷ ¼öÇà Àü µ¿ÀÛ");
+//	public void printLog(JoinPoint jp) {
+//		System.out.println("[ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½] ï¿½ï¿½ï¿½ï¿½Ï½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
+//	}
+//	
+//	public void beforeLog(JoinPoint jp) {
+//		String method = jp.getSignature().getName();
+//		Object[] args = jp.getArgs();
+//		System.out.println("[ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½] " + method + "()ï¿½Þ¼Òµï¿½, Args ï¿½ï¿½ï¿½ï¿½ : " + args[0].toString());
+//	}
+	
+	@Pointcut("execution(* com.springbook.biz..*Impl.*(..))")
+	public void allPointcut() {}
+
+	@Pointcut("execution(* com.springbook.biz..*Impl.get*(..))")
+	public void getPointcut() {}
+	
+	
+	@Before("allPointcut()")
+	public void printLog(JoinPoint jp) {
+		String method = jp.getSignature().getName();
+		Object[] args = jp.getArgs();
+		System.out.println("[ì‚¬ì „ ì²˜ë¦¬] " + method + "() ë©”ì†Œë“œ ARGS ì •ë³´ : " + args[0].toString());
 	}
 }

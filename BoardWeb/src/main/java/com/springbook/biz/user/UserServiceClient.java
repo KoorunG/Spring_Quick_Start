@@ -7,7 +7,7 @@ public class UserServiceClient {
 
 	public static void main(String[] args) {
 		
-		AbstractApplicationContext container = new GenericXmlApplicationContext("applicationContextBusiness.xml");
+		AbstractApplicationContext container = new GenericXmlApplicationContext("applicationContext.xml");
 		UserService userService = container.getBean("userService", UserService.class);
 		
 		UserVO user = null;
@@ -18,9 +18,9 @@ public class UserServiceClient {
 		
 		user = userService.getUser(vo);
 		if(user != null) {
-			System.out.println(user.getName() + "´Ô È¯¿µÇÕ´Ï´Ù!");
+			System.out.println(user.getName() + "ë‹˜ ì•ˆë…•í•˜ì„¸ìš”!");
 		} else {
-			System.out.println("·Î±×ÀÎ ½ÇÆĞ!");
+			System.out.println("ë¡œê·¸ì¸ ì‹¤íŒ¨!");
 		}
 	
 		container.close();

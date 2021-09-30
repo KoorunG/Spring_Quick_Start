@@ -3,6 +3,6 @@ package com.springbook.biz.common;
 public class Log4jAdvice {
 
 	public void printLogging() {
-		System.out.println("[°øÅë ·Î±×-Log4j] ºñÁî´Ï½º ·ÎÁ÷ ¼öÇà Àü µ¿ÀÛ");
+		System.out.println("[ê³µí†µë¡œê·¸-Log4j] ï¿½ï¿½ï¿½ï¿½Ï½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 	}
 }
