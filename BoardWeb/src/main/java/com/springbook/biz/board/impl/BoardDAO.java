@@ -13,7 +13,7 @@ import com.springbook.biz.common.JDBCUtil;
 
 // DAO(Data Access Object)
 
-//@Repository
+@Repository
 public class BoardDAO {
 
 	
@@ -23,11 +23,13 @@ public class BoardDAO {
 	
 	
 	private static final String BOARD_INSERT = "insert into board(seq, title, writer, content) values((select nvl(max(seq),0)+1 from board),?,?,?)";
-	private static final String BOARD_UPDATE = "update board set title=?, content=?, where seq=?";
+	private static final String BOARD_UPDATE = "update board set title=?, content=? where seq=?";
 	private static final String BOARD_DELETE = "delete board where seq=?";
 	private static final String BOARD_GET = "select * from board where seq=?";
 	private static final String BOARD_LIST = "select * from board order by seq desc";
+	private static final String BOARD_CNT = "update board set cnt = (select cnt from board where seq = ?) + 1 where seq = ?";
 	
+	// 조회수 올리는 로직 => 클릭할 때마다 조회수가 1씩 증가하고 DB에 반영되어야함
 	
 	public void insertBoard(BoardVO vo) {
 		try {
@@ -36,6 +38,20 @@ public class BoardDAO {
 			stmt.setString(1, vo.getTitle());		
 			stmt.setString(2, vo.getWriter());
 			stmt.setString(3, vo.getContent());
+			stmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(stmt, conn);
+		}
+	}
+	
+	public void updateCnt(BoardVO vo) {
+		try {
+			conn = JDBCUtil.getConnection();
+			stmt = conn.prepareStatement(BOARD_CNT);
+			stmt.setInt(1, vo.getSeq());
+			stmt.setInt(2, vo.getSeq());
 			stmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
