@@ -1,4 +1,4 @@
-package web.frontcontroller.v2.controller;
+package web.frontcontroller.v2;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import web.frontcontroller.MyView;
-import web.frontcontroller.v2.ControllerV2;
+import web.frontcontroller.v2.controller.MemberFormControllerV2;
+import web.frontcontroller.v2.controller.MemberListControllerV2;
+import web.frontcontroller.v2.controller.MemberSaveControllerV2;
 
 @WebServlet("/front-controller/v2/*")
 public class FrontControllerServletV2 extends HttpServlet{

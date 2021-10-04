@@ -1,4 +1,4 @@
-package web.frontcontroller.v1.controller;
+package web.frontcontroller.v1;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import web.frontcontroller.v1.ControllerV1;
+import web.frontcontroller.v1.controller.MemberFormControllerV1;
+import web.frontcontroller.v1.controller.MemberListControllerV1;
+import web.frontcontroller.v1.controller.MemberSaveControllerV1;
 
 @WebServlet("/front-controller/v1/*")		// /front-controller/v1/ 의 경로로 오는 모든 것을 여기에 매핑한 것! 
 public class FrontControllerServletV1 extends HttpServlet {		// 프론트 컨트롤러만 서블릿을 상속받으면 됨

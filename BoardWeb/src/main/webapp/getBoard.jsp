@@ -5,10 +5,6 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
-<%
-	BoardVO board = (BoardVO) session.getAttribute("board");
-%>
-
 <html>
 <head>
 <meta charset="UTF-8">
@@ -32,40 +28,40 @@
 	<div class="center-text">
 	<h1>글 상세</h1>
 	<br>
-	<a href="logout_proc.jsp">Log-out</a>
+	<a href="logout.do">Log-out</a>
 	</div>
 	<hr>
-	<form action="updateBoard_proc.jsp" method="post">
+	<form action="updateBoard.do" method="post">
 	<!-- 글 수정 시 글 상세 화면(getBoard.jsp)이 글 수정에 사용 된다.
 	     이때, 글 수정 처리를 진행 하려면, 수정할 글의 제목과 내용 뿐만 아니라,
 	     게시글 번호로 알야아 한다. 따라서, 상세 화면을 출력할 때 form 태그 밑에
 	   HIDDEN 타입의 input 태그를 추가하여 수정할 게시글 번호도 같이
 	     전달될 수 있도록 코딩해야 한다. -->
-	<input name="seq" type="hidden" value="<%=board.getSeq() %>"/>
+	<input name="seq" type="hidden" value="${board.seq}"/>
 	<table style="margin-top : 7px; margin-bottom : 7px;" border="1" cellpadding="0" cellspacing="0">
 		<tr>
 			<td style="background-color : orange" width="70">제목</td>
-			<td align="left"><input name="title" type="text" value="<%= board.getTitle() %>"/> </td>
+			<td align="left"><input name="title" type="text" value="${board.title}"/> </td>
 		</tr>
 		
 		<tr>
 			<td style="background-color : orange">작성자</td>
-			<td align="left"><%= board.getWriter() %></td>
+			<td align="left">${board.writer}</td>
 		</tr>
 		
 		<tr>
 			<td style="background-color : orange">내용</td>
-			<td align="left"><textarea name="content" cols="40" rows="10" style="resize : none"><%= board.getContent() %></textarea></td>
+			<td align="left"><textarea name="content" cols="40" rows="10" style="resize : none">${board.content}</textarea></td>
 		</tr>
 		
 		<tr>
 			<td style="background-color : orange">등록일</td>
-			<td align="left"><%= board.getRegDate() %></td>
+			<td align="left">${board.regDate}</td>
 		</tr>
 		
 		<tr>
 			<td style="background-color : orange">조회수</td>
-			<td align="left"><%= board.getCnt() %></td>
+			<td align="left">${board.cnt}</td>
 		</tr>
 		
 		<tr>
@@ -78,7 +74,7 @@
 	<hr>
 	<div class="center-text">
 	<a href="insertBoard.jsp">글등록</a>&nbsp;&nbsp;&nbsp;
-	<a href="deleteBoard_proc.jsp?seq=<%= board.getSeq() %>">글삭제</a>&nbsp;&nbsp;&nbsp;
+	<a href="deleteBoard.do?seq=${board.seq}">글삭제</a>&nbsp;&nbsp;&nbsp;
 	<a href="getBoardList.do">글목록</a>
 	</div>
 </body>

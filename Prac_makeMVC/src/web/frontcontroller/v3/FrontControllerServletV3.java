@@ -1,8 +1,9 @@
-package web.frontcontroller.v3.controller;
+package web.frontcontroller.v3;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,16 +13,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import web.frontcontroller.ModelView;
 import web.frontcontroller.MyView;
-import web.frontcontroller.v3.ControllerV3;
+import web.frontcontroller.v3.controller.MemberFormControllerV3;
+import web.frontcontroller.v3.controller.MemberListControllerV3;
+import web.frontcontroller.v3.controller.MemberSaveControllerV3;
 
-@WebServlet("/front-controller/v3/*")
+@WebServlet(name = "frontControllerServletV3" , urlPatterns = "/front-controller/v3/*")
 public class FrontControllerServletV3 extends HttpServlet {
 
 	// 컨트롤러 맵
 	private Map<String, ControllerV3> controllerMap = new HashMap<>();
 
 	// 생성자에서 컨트롤러 정보 입력
-	public FrontControllerServletV3(Map<String, ControllerV3> controllerMap) {
+	public FrontControllerServletV3() {
 		controllerMap.put("/front-controller/v3/members/new-form", new MemberFormControllerV3());
 		controllerMap.put("/front-controller/v3/members/save", new MemberSaveControllerV3());
 		controllerMap.put("/front-controller/v3/members", new MemberListControllerV3());
@@ -56,15 +59,6 @@ public class FrontControllerServletV3 extends HttpServlet {
 		// render() 으로 뷰에 포워딩함! (여기서 mv.getModel()으로 model을 꺼내 같이 넘겨주는 것이 포인트)
 		view.render(mv.getModel(), request, response);
 	}
-
-	private MyView viewResolver(String viewName) {
-		
-		// 인자로 받은 viewName으로 viewPath를 만들 수 있고
-		MyView view = new MyView("/WEB-INF/views/" + viewName + ".jsp");
-		// 만든 뷰를 반환함
-		return view;
-	}
-
 	
 	// HttpServletRequest 요청 정보를 바탕으로 paramMap을 만드는 메소드
 	private Map<String, String> createParamMap(HttpServletRequest request) {
@@ -72,21 +66,26 @@ public class FrontControllerServletV3 extends HttpServlet {
 		// 파라미터 맵 객체를 만든 뒤
 		Map<String, String> paramMap = new HashMap<>();
 		
-		// request.getParameterNames().hasMoreElements() => 파라미터의 이름이 있는지를 검사하는 메소드
+		// 요청 파라미터의 키값이 존재하는 동안
 		while(request.getParameterNames().hasMoreElements()) {
 			
-			// request.getParameterNames().nextElement()으로 파라미터의 이름을 추출할 수 있다!
-			String paramName = (String)(request.getParameterNames().nextElement());
-			// 추출한 파라미터의 이름을 키값으로, value는 request.getParameter(paramName)을 넣는다
-			paramMap.put(paramName, request.getParameter(paramName));
+			// whill문을 이용하여 paramName과 value를 얻고
+			String paramName = request.getParameterNames().nextElement();
+			String value = request.getParameter(paramName);
+			
+			// 위에서 만든 paramMap에 저장한 뒤
+			paramMap.put(paramName, value);
 		}
 		
-		// 완성한 파라미터 맵을 리턴
+		// paramMap을 반환한다
 		return paramMap;
-		
 	}
 	
-	
-	
-	
+	private MyView viewResolver(String viewName) {
+		
+		// 인자로 받은 viewName으로 viewPath를 만들 수 있고
+		return new MyView("/WEB-INF/views/"+viewName+".jsp");
+		// 만든 뷰를 반환함
+		
+	}
 }

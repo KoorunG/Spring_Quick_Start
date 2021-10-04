@@ -22,10 +22,10 @@
 	<div class="center-text">
 	<h1>글 등록</h1>
 	<br>
-	<a href="logout_proc.jsp">Log-out</a>
+	<a href="logout.do">Log-out</a>
 	</div>
 	<hr>
-	<form action="insertBoard_proc.jsp" method="post">
+	<form action="insertBoard.do" method="post">
 		<table style="margin-top : 7px; margin-bottom : 7px" border="1" cellpadding="0" cellspacing="0">
 			<tr>
 				<td style="background-color : orange" width="70">제목</td><td align="left">
@@ -50,7 +50,7 @@
 	</form>
 	<hr>
 	<div class="center-text">
-	<a href="getBoardList.jsp">글 목록 가기</a>
+	<a href="getBoardList.do">글 목록 가기</a>
 	</div>
 </body>
 </html>

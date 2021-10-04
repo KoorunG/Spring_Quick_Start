@@ -22,7 +22,7 @@ public class MyView {
 		dispatcher.forward(request, response);
 	}
 	
-	// V3에서 사용하는 render (오버로딩)
+	// V3, V4에서 사용하는 render (오버로딩)
 	public void render(Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		modelToRequestAttribute(model, request);
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPath);
