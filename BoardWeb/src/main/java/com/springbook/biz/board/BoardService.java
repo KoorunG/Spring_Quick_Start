@@ -9,6 +9,8 @@ public interface BoardService {
 	void updateBoard(BoardVO vo);
 
 	void deleteBoard(BoardVO vo);
+	
+	void updateCnt(BoardVO vo);
 
 	BoardVO getBoard(BoardVO vo);
 

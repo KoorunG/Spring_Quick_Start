@@ -12,8 +12,6 @@ public class BoardServiceClient {
 		
 		
 		AbstractApplicationContext container = new GenericXmlApplicationContext("applicationContext.xml");
-		
-		
 		BoardService boardService = container.getBean("boardService",BoardService.class);
 		
 		

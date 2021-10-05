@@ -26,8 +26,11 @@ public class BoardDAO {
 	private static final String BOARD_UPDATE = "update board set title=?, content=? where seq=?";
 	private static final String BOARD_DELETE = "delete board where seq=?";
 	private static final String BOARD_GET = "select * from board where seq=?";
-	private static final String BOARD_LIST = "select * from board order by seq desc";
+//	private static final String BOARD_LIST = "select * from board order by seq desc";
 	private static final String BOARD_CNT = "update board set cnt = (select cnt from board where seq = ?) + 1 where seq = ?";
+	
+	private static final String BOARD_LIST_T = "select * from board where title like '%'||?||'%' order by seq desc";	
+	private static final String BOARD_LIST_C = "select * from board where content like '%'||?||'%' order by seq desc";
 	
 	// 조회수 올리는 로직 => 클릭할 때마다 조회수가 1씩 증가하고 DB에 반영되어야함
 	
@@ -117,7 +120,13 @@ public class BoardDAO {
 		List<BoardVO> boardList = new ArrayList<>();
 		try {
 			conn = JDBCUtil.getConnection();
-			stmt = conn.prepareStatement(BOARD_LIST);
+			if(vo.getSearchCondition().equals("TITLE")) {
+				stmt = conn.prepareStatement(BOARD_LIST_T);
+			} else if(vo.getSearchCondition().equals("CONTENT")) {
+				stmt = conn.prepareStatement(BOARD_LIST_C);
+			}
+			stmt.setString(1, vo.getSearchKeyword());
+//			stmt = conn.prepareStatement(BOARD_LIST);
 			rs = stmt.executeQuery();
 			while(rs.next()) {
 				BoardVO board = new BoardVO();
