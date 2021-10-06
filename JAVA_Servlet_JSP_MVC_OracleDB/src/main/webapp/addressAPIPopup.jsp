@@ -63,8 +63,8 @@
 	function chooseAddress(roadAddr, jibunAddr, zipNo){
 		var aParam = [];
 		aParam["roadAddr"] = roadAddr;
-		aParam["jibunAddr"] = roadAddr;
-		aParam["zipNo"] = roadAddr;
+		aParam["jibunAddr"] = jibunAddr;
+		aParam["zipNo"] = zipNo;
 
 		opener.callback_openAddressPopup(aParam);
 		window.close();

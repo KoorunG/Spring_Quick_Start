@@ -27,8 +27,8 @@ public class BoardDAO {
 	private static final String BOARD_DELETE = "delete board where seq=?";
 	private static final String BOARD_GET = "select * from board where seq=?";
 //	private static final String BOARD_LIST = "select * from board order by seq desc";
-	private static final String BOARD_CNT = "update board set cnt = (select cnt from board where seq = ?) + 1 where seq = ?";
 	
+	private static final String BOARD_CNT = "update board set cnt = (select cnt from board where seq = ?) + 1 where seq = ?";
 	private static final String BOARD_LIST_T = "select * from board where title like '%'||?||'%' order by seq desc";	
 	private static final String BOARD_LIST_C = "select * from board where content like '%'||?||'%' order by seq desc";
 	

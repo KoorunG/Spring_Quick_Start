@@ -9,6 +9,8 @@
 	
 	<!-- 컴포넌트 스캔 설정 -->
 	<context:component-scan base-package="com.springbook.view"/>
+	<!--  MVC Annotation 설정 -->
+	<mvc:annotation-driven/>
 	
 	<!-- 파일 업로드 설정 -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -33,4 +35,25 @@
 		</property>
 		<property name="defaultErrorView" value="common/error.jsp"/>
 	</bean>
+	
+	<!-- 다국어 설정 -->
+	<!-- MessageSource 등록 -->
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>message.messageSource</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- LocaleResolver 등록 -->
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"/>
+	
+	<!-- LocaleChangeInterceptor 등록 -->
+	<!-- interceptor : 말 그대로 중간에 개입하는... -->
+	<mvc:interceptors>
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property name="paramName" value="lang"/>
+		</bean>
+	</mvc:interceptors>
 </beans>

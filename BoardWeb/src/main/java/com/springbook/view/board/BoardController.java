@@ -3,6 +3,7 @@ package com.springbook.view.board;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.springbook.biz.board.BoardListVO;
 import com.springbook.biz.board.BoardService;
 import com.springbook.biz.board.BoardVO;
 
@@ -114,5 +117,29 @@ public class BoardController {
 		boardService.deleteBoard(vo);
 		return "redirect:getBoardList.do";
 
+	}
+	
+	// JSON 데이터 변환
+	// @ResponseBody 로 인해 뷰 경로가 아닌 객체를 직접 리턴할 수 있다
+	// (즉, 리턴타입을 랜더링 처리하지 않음을 명시하는 애노테이션)
+
+	@RequestMapping("/dataTransform.do")	
+	@ResponseBody
+	public List<BoardVO> dataTransform(BoardVO vo) {
+		vo.setSearchCondition("TITLE");
+		vo.setSearchKeyword("");
+		List<BoardVO> boardList = boardService.getBoardList(vo);
+		return boardList;
+	}
+	
+	@RequestMapping("/dataTransformXml.do")	
+	@ResponseBody
+	public BoardListVO dataTransformXml(BoardVO vo) {
+		vo.setSearchCondition("TITLE");
+		vo.setSearchKeyword("");
+		List<BoardVO> boardList = boardService.getBoardList(vo);
+		BoardListVO boardListVO = new BoardListVO();
+		boardListVO.setBoardList(boardList);
+		return boardListVO;
 	}
 }

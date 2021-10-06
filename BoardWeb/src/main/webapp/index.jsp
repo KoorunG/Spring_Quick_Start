@@ -25,7 +25,10 @@
 	<div class="center-text">
 		<h1>게시판 프로그램</h1>
 		<hr>
-		<a href="login.do">로그인</a> <br> <br> <br> <a href="getBoardList.do">글 목록 바로가기</a>
+		<a href="login.do">로그인</a> <br> <br> <br> 
+		<a href="getBoardList.do">글 목록 바로가기</a> <br> <br> <br>
+		<a href="dataTransform.do">글 목록 변환 처리(JSON)</a> <br> <br> <br>
+		<a href="dataTransformXml.do">글 목록 변환 처리(XML)</a>
 		<hr>
 	</div>
 </body>

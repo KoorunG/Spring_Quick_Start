@@ -45,4 +45,10 @@
 		<aop:pointcut id="txPointcut" expression="execution(* com.springbook.biz..*(..))"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
 	</aop:config>
+	
+	<!-- SesstionFactory 설정 -->
+	<bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="configLocation" value="classpath:sql-map-config.xml"/>
+	</bean>
 </beans>
