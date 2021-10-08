@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace : 다른 파일의 SQL문과 구분하기 위해 설정 -->
+<!-- 아래에 매핑한 SQL문의 id와 조합하여 Java 코드에서 사용함 -->
+<!-- 각 레코드는 한개의 MemberVO 객체를 생성하고 지정한 속성에 따라 레코드의 칼럼값을 저장함 -->
+<mapper namespace="mapper.member">
+
+	<!-- <resultMap> : SQL문 실행 후 반환되는 레코드를 프로퍼티에 저장 -->
+	<!-- property : 프로퍼티 이름, column : 매핑할 DB의 칼럼 이름 -->
+	<resultMap id="memResult" type="memberVO">
+		<result property="id" column="id" />
+		<result property="pwd" column="pwd" />
+		<result property="name" column="name" />
+		<result property="email" column="email" />
+		<result property="joinDate" column="joinDate" />
+	</resultMap>
+
+
+	<!-- type 속성을 memberVO => HashMap으로 변경 -->
+	<!-- 이번에는 자바의 HashMap을 이용하여 모든 회원을 조회하는 기능을 실습 -->
+	<!-- 즉 SQL문 실행 시 레코드의 컬럼 이름을 key로 지정하고 그 값을 value로 하여 Hashmap에 차례대로 저장 -->
+	<!-- resultMap id="memResult" type="java.util.HashMap"> <result property="id" 
+		column="id" /> <result property="pwd" column="pwd" /> <result property="name" 
+		column="name" /> <result property="email" column="email" /> <result property="joinDate" 
+		column="joinDate" /> </resultMap> -->
+
+
+	<!-- "mapper.member.selectAllMemberList" 으로 DAO에서 호출해서 사용함 -->
+	<!-- 위에서 설정한 "memResult"에 조회 결과를 저장함 -->
+	<select id="selectAllMemberList" resultMap="memResult">
+      <![CDATA[
+         select * from t_member	order by joinDate desc	 	
+      ]]>
+	</select>
+
+	<!-- 조건 값으로 회원 정보 조회 -->
+	<!-- 조건 값으로 조회하는 경우 브라우저에서 전달되는 값이 있으므로 select 태그에 parameterType 속성을 전달되는 
+		조건 값의 데이터 타입으로 지정함 참고로 MemberDAO에서 메소드 호출 시 전달된 조건 값은 매개변수 이름으로 SQL 문의 조건식에 
+		#{전달된 매개변수 이름} 형식으로 사용함 그리고 조회되는 레코드가 한개인 경우 resultType 속성에 레코드를 저장할 memberVO를 
+		설정함 -->
+
+	<!-- 테이블의 회원 정보 중, String이나 int 같은 primitive Type 데이터 조회 -->
+	<!-- 따라서 resultType을 String이나 int로 설정함 -->
+	<!-- MemberDAO 에서 접근 시 사용할 SQL문 아이디 : selectName -->
+	<!-- resultType = "String" : SQL문으로 조회한 이름(String)을 호출한 메소드로 반환함 -->
+	<select id="selectName" resultType="String">
+    <![CDATA[
+	select name from t_member
+	where id = 'jangnara'			
+    ]]>
+	</select>
+
+
+	<!-- MemberDAO 에서 접근 시 사용할 SQL문 아이디 : selectPwd -->
+	<!-- resultType = "int" : SQL문으로 조회한 비밀번호(int)를 호출한 메소드로 반환함 -->
+	<select id="selectPwd" resultType="int">
+	  <![CDATA[ 
+	    select pwd from t_member 
+	    where id = 'jangnara'
+	 ]]>
+	</select>
+
+	<!-- parameterType은 대부분 생략한다 -->
+	<select id="selectMemberById" resultType="memberVO"
+		parameterType="String">
+      <![CDATA[
+         select * from t_member
+         where
+         id=#{id}			
+      ]]>
+	</select>
+	<!-- #{id} : MemberDAO에서 프로퍼티를 가져오는 Mybatis 문법 -->
+
+	<select id="selectMemberByPwd" resultMap="memResult"
+		parameterType="int">
+      <![CDATA[
+         select * from t_member
+         where
+         pwd = #{pwd}			
+      ]]>
+	</select>
+
+	<!-- MemberVO의 프로퍼티들을 파라미터로 받고 있으므로 parameterType="memberVO" -->
+	 <insert id="insertMember" parameterType="memberVO">
+		<![CDATA[
+		 insert into t_member(id,pwd, name, email)
+		 values(#{id}, #{pwd}, #{name}, #{email})
+		]]>
+	</insert> 
+
+	<!--<insert id="insertMember2" parameterType="java.util.Map">
+		<![CDATA[
+			 insert into t_member(id,pwd, name, email)
+			 values(#{id}, #{pwd}, #{name}, #{email})
+		]]>
+	</insert> --> 
+
+	<!-- update문은 update 태그를 이용해 작성하고 parameterType 속성은 MemberDAO 에서 메소드를 호출할 때 전달될 MemberVO 클래스 타입으로 지정
+		update문에서 수정할 칼럼값들을 MemberVO 속성 이름으로 지정하고 수정할 회원 ID에 해당하는 조건 값도 MemberVO의 속성 이름에 저장된 값을 value로 설정함 -->
+	<update id="updateMember" parameterType="memberVO">
+     <![CDATA[
+	     update t_member
+	     set pwd=#{pwd}, name=#{name}, email=#{email}
+	     where
+	     id=#{id}
+      ]]>
+	</update>
+
+	<!-- delete문은 delete 태그를 이용하여 작성하며 parameterType 속성을 String으로 설정함 -->
+	<!-- 매개변수 이름 id로 전달된 값을 delete문의 조건값으로 사용함 -->
+	<delete id="deleteMember" parameterType="String">
+	<![CDATA[
+	   delete from  t_member
+	   where
+	   id=#{id}
+	]]>
+	</delete>
+
+
+	<!-- 동적 SQL문 -->
+	<!-- Mybatis는 동적 쿼리를 간단하게 처리할 수 있다! -->
+	<select id="searchMember" parameterType="memberVO"
+		resultMap="memResult">
+      <![CDATA[
+          select * from t_member
+      ]]>
+		<where>
+			<if test=" name != ''  and  name != null">
+				name=#{name}
+			</if>
+			<if test="email != ''  and email != null ">
+				and email = #{email}
+			</if>
+		</where>
+		order by joinDate desc
+	</select>
+
+	<!-- <sql id="a"> <![CDATA[ select * from t_member ]]> </sql> -->
+
+	<!-- <select id="searchMember" parameterType="memberVO" resultMap="memResult"> 
+		<include refid="a" /> <![CDATA[ select * from t_member ]]> <where> <choose> 
+		<when test="name != '' and name != null and email != '' and email != null"> 
+		name=#{name} and email=#{email} </when> <when test="name != '' and name != 
+		null"> name = #{name} </when> <when test="email !='' and email != null"> 
+		email = #{email} </when> </choose> </where> order by joinDate desc </select> -->
+
+	<select id="foreachSelect" resultMap="memResult"
+		parameterType="java.util.Map">
+		<!-- <include refid="a" /> -->
+      <![CDATA[
+        select * from t_member 
+          
+      ]]>
+
+		where name in
+		<foreach item="item" collection="list" open="(" separator=","
+			close=")">
+			#{item}
+		</foreach>
+		order by joinDate desc
+	</select>
+
+	<insert id="foreachInsert" parameterType="java.util.Map">
+		<foreach item="item" collection="list" open="INSERT ALL"
+			separator=" " close="SELECT * FROM DUAL">
+			INTO t_member(id, pwd, name, email)
+			VALUES (#{item.id},
+			#{item.pwd},
+			#{item.name},
+			#{item.email})
+		</foreach>
+	</insert>
+
+	<!-- <select id="selectLike" resultMap="memResult" parameterType="String" 
+		> <![CDATA[ select * from t_member where name like '%'#{name}'%' ]]> </select> -->
+	<!-- like 검색 -->
+	<select id="selectLike" resultMap="memResult"
+		parameterType="String">
+      <![CDATA[
+         select * from t_member
+         where
+         name like '%' || #{name} || '%'		
+      ]]>
+	</select>
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!-- DB연동 시 반환되는 값을 빈이나 트랜잭션, 데이터소스 등 Mybatis 관련 정보를 설정함 -->
+<!-- src 패키지 아래 SqlMapConfig.xml은 mybatis패키지에 작성하며(다른 명칭의 패키지도 물론 사용 가능) -->
+<!-- /mybatis/mappers 패키지에 SQL 설정 mapper xml(여기서는 member.xml) 파일을 작성해서 위치시킨다 -->
+
+<configuration>
+	<typeAliases>
+		<!-- typeAlias로 별칭 지정 => 매핑 파일에서 별칭으로 간편하게 쓸 수 있다 -->
+		<typeAlias type="com.spring.ex04.MemberVO" alias="memberVO" />
+	</typeAliases>
+
+	<!-- <environments> : 환경 설정 루트 앨리먼트 -->
+	<environments default="development">
+		<environment id="development">
+
+			<!-- <transactionManager type> : JDBC : 수동 ; MANAGED : 자동 -->
+			<transactionManager type="JDBC" />
+
+			<!-- https://mybatis.org/mybatis-3/ko/configuration.html -->
+			<!-- POOLED - DataSource에 풀링이 적용된 JDBC 커넥션을 위한 구현체이다. 이는 새로운 Connection 
+				인스턴스를 생성하기 위해 매번 초기화하는 것을 피하게 해준다. 그래서 빠른 응답을 요구하는 웹 애플리케이션에서는 가장 흔히 사용되고 
+				있다. -->
+			<dataSource type="POOLED">
+				<property name="driver"
+					value="oracle.jdbc.driver.OracleDriver" />
+				<property name="url"
+					value="JDBC:oracle:thin:@localhost:1521:orcl" />
+				<property name="username" value="mybatisadd" />
+				<property name="password" value="mybatisadd" />
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<!-- <mappers> : Mybatis에서 사용하는 SQL문이 있는 XML 파일의 위치를 지정 -->
+	<!-- 회원 기능 관련 SQL문이 있으며 반드시 지정한 패키지 이름과 일치해야함! -->
+	<mappers>
+		<mapper resource="mybatis/mappers/member.xml" />
+	</mappers>
+</configuration>

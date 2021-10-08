@@ -15,12 +15,12 @@ public class BoardServiceClient {
 		BoardService boardService = container.getBean("boardService",BoardService.class);
 		
 		
-		BoardVO vo = new BoardVO();
+		BoardVO vo = new BoardVO();	
 //		vo.setSeq(100);							// BoardDAOSpring.java에서 쿼리문을 수동입력 하도록 수정했기 때문에 시퀀스를 새로 입력해줌
-		vo.setTitle("안녕하세요");
-		vo.setWriter("쿠렁");
-		vo.setContent("반갑습니다...");
-		boardService.insertBoard(vo);			// 이제는 AOP로 트랜잭션 처리하기 때문에 주석처리함
+//		vo.setTitle("안녕하세요");
+//		vo.setWriter("이재학");
+//		vo.setContent("반갑습니다...");
+//		boardService.insertBoard(vo);			// 이제는 AOP로 트랜잭션 처리하기 때문에 주석처리함
 		
 //		Scanner sc = new Scanner(System.in);
 //			System.out.println("=========== deleteBoard =============");

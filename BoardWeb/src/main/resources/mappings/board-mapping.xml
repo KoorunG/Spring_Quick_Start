@@ -11,6 +11,7 @@
 		<result property="regDate" column="REGDATE"/>
 		<result property="cnt" column="CNT"/>
 	</resultMap>
+	<!-- CDATA : 이스케이프 처리를 해주는 태그임 -->
 	<select id="getBoard" resultMap="boardResult">
 	<![CDATA[
 		SELECT * FROM BOARD WHERE SEQ=#{seq}
@@ -35,7 +36,6 @@
 		<![CDATA[
 		ORDER BY SEQ DESC
 		]]>
-		
 	</select>
 
 	<insert id="insertBoard">

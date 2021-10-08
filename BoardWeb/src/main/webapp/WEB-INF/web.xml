@@ -3,13 +3,13 @@
 	xmlns="http://java.sun.com/xml/ns/javaee"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5">
-	
+
 	<!-- 컨텍스트 경로 설정(?) -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:applicationContext.xml</param-value>
 	</context-param>
-	
+
 	<!-- 서블릿 -->
 	<servlet>
 		<servlet-name>action</servlet-name>

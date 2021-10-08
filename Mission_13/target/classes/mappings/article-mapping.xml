@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ArticleDAO">
+	<resultMap id="articleResult" type="article">
+		<id property="id" column="article_id"/>
+		<result property="title" column="article_title"/>
+		<result property="content" column="article_content"/>
+	</resultMap>
+	<!-- CDATA : 이스케이프 처리를 해주는 태그임 -->
+	<select id="selectById" resultMap="articleResult">
+	<![CDATA[
+		SELECT * FROM SPRING_CRUD WHERE ARTICLE_ID = (SELECT MAX(ARTICLE_ID) FROM SPRING_CRUD)
+		]]>
+	</select>
+
+	<insert id="insert">
+	<![CDATA[
+		INSERT INTO SPRING_CRUD(ARTICLE_ID, ARTICLE_TITLE, ARTICLE_CONTENT)
+		VALUES(IDX_SEQ.NEXTVAL, #{title}, #{content})
+		]]>
+	</insert>
+
+	<update id="update">
+	<![CDATA[
+		UPDATE SPRING_CRUD SET ARTICLE_TITLE = #{title}, ARTICLE_CONTENT = #{content} 
+		WHERE ARTICLE_ID = (SELECT MAX(ARTICLE_ID) FROM SPRING_CRUD)
+		]]>
+	</update>
+	
+
+	<delete id="delete">
+	<![CDATA[
+		DELETE FROM SPRING_CRUD WHERE ARTICLE_ID = (SELECT MAX(ARTICLE_ID) FROM SPRING_CRUD)
+		]]>
+	</delete>
+
+</mapper>
